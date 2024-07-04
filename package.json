@@ -1,10 +1,10 @@
 {
   "name": "scattering-solana-actions",
   "version": "0.0.0",
-  "type": "module",
+  "main": "src/index.ts",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsc",
+    "build": "tsc && babel build --out-dir build",
     "start": "node build/src/index.js"
   },
   "dependencies": {
@@ -19,6 +19,10 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@babel/cli": "^7.24.7",
+    "@babel/core": "^7.24.7",
+    "@babel/plugin-transform-modules-commonjs": "^7.24.7",
+    "@babel/preset-env": "^7.24.7",
     "@types/node": "^20.11.17",
     "prettier": "^3.3.2",
     "tsx": "^4.7.1"
