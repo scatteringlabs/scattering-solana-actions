@@ -1,7 +1,7 @@
 import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
-import { actionSpecOpenApiPostRequestBody, actionsSpecOpenApiGetResponse, } from '../openapi';
-import { getCollectionBySlug } from './scattering-api';
-import jupiterApi from '../jupiter-swap/jupiter-api';
+import { actionSpecOpenApiPostRequestBody, actionsSpecOpenApiGetResponse, } from '../openapi.js';
+import { getCollectionBySlug } from './scattering-api.js';
+import jupiterApi from '../jupiter-swap/jupiter-api.js';
 const app = new OpenAPIHono();
 const SWAP_AMOUNT_USD_OPTIONS = [{ lable: '0.1SOL', amount: 1000000 }, { lable: '0.5SOL', amount: 5000000 }, { lable: '1SOL', amount: 10000000 }];
 app.openapi(createRoute({

@@ -1,5 +1,5 @@
 import { serve } from '@hono/node-server';
-import scatteringSwap from './scattering/route';
+import scatteringSwap from './scattering/route.js';
 import { cors } from 'hono/cors';
 import { swaggerUI } from '@hono/swagger-ui';
 import { OpenAPIHono } from '@hono/zod-openapi';

@@ -1,10 +1,11 @@
 {
   "name": "scattering-solana-actions",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
-    "start": "pm2 start ecosystem.config.js"
+    "start": "node build/src/index.js"
   },
   "dependencies": {
     "@hono/node-server": "^1.11.3",
