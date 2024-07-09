@@ -20,7 +20,6 @@ var getCollectionBySlug = /*#__PURE__*/function () {
           return fetch("".concat(exports.BASE_URL_DEV, "/collection/slug/").concat(slug));
         case 3:
           response = _context.sent;
-          console.log('response', response);
           if (response.ok) {
             _context.next = 7;
             break;

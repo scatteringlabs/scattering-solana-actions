@@ -10,7 +10,7 @@ import jupiterApi from '../jupiter-swap/jupiter-api';
 import { ActionPostRequest } from '@solana/actions';
 
 const app = new OpenAPIHono();
-const SWAP_AMOUNT_USD_OPTIONS = [{ lable: '0.1SOL', amount: 1000000 }, { lable: '0.5SOL', amount: 5000000 }, { lable: '1SOL', amount: 10000000 }];
+const SWAP_AMOUNT_USD_OPTIONS = [{ lable: '0.1SOL', amount: 100000000 }, { lable: '0.5SOL', amount: 500000000 }, { lable: '1SOL', amount: 1000000000 }];
 app.openapi(
   createRoute({
     method: 'get',
@@ -46,16 +46,16 @@ app.openapi(
               label: `${lable}`,
               href: `/api/buy/${slug}/${amount}`,
             })),
-            {
-              href: `/api/swap`,
-              label: `Buy ${collectionInfo?.data?.item?.symbol}`,
-              parameters: [
-                {
-                  name: 'amount',
-                  label: 'Enter a custom USD amount',
-                },
-              ],
-            },
+            // {
+            //   href: `/api/buy/usdt/amount`,
+            //   label: `Buy ${collectionInfo?.data?.item?.symbol}`,
+            //   parameters: [
+            //     {
+            //       name: 'amount',
+            //       label: 'Enter a custom USD amount',
+            //     },
+            //   ],
+            // },
 
           ],
         },
@@ -115,14 +115,6 @@ app.openapi(
           type: 'string',
           example: 'abble_spl404',
         }),
-        amount: z.string().openapi({
-          param: {
-            name: 'amount',
-            in: 'path',
-          },
-          type: 'string',
-          example: '0.1sol',
-        }),
       }),
     },
     responses: actionsSpecOpenApiGetResponse,
@@ -138,8 +130,66 @@ app.openapi(
         outputMint: collectionInfo?.data?.item?.erc20_address,
         amount: Number(amount),
         autoSlippage: true,
+        swapMode:'ExactIn',
         maxAutoSlippageBps: 500, // 5%,
       });
+      console.log('swap ',amount ,'sol => ',slug );
+      console.log('quote',quote);
+      const swapResponse = await jupiterApi.swapPost({
+        swapRequest: {
+          quoteResponse: quote,
+          userPublicKey: account,
+          prioritizationFeeLamports: 'auto',
+        },
+      });
+      const response: ActionsSpecPostResponse = {
+        transaction: swapResponse.swapTransaction,
+      };
+      return c.json(response, 200);
+
+    } catch (error) {
+      console.log('error', error, 200);
+
+      return c.json({ error });
+    }
+  },
+);
+app.openapi(
+  createRoute({
+    method: 'post',
+    path: '/api/buy/{slug}/usdt/{amount}',
+    tags: ['Scattering Swap'],
+    request: {
+      params: z.object({
+        slug: z.string().openapi({
+          param: {
+            name: 'slug',
+            in: 'path',
+          },
+          type: 'string',
+          example: 'abble_spl404',
+        }),
+      }),
+    },
+    responses: actionsSpecOpenApiGetResponse,
+  }),
+  async (c) => {
+    try {
+      const slug = c.req.param('slug');
+      // const collectionInfo = await getCollectionBySlug({ slug })
+      // const { amount, account } = (await c.req.json());
+      // const quote = await jupiterApi.quoteGet({
+      //   inputMint: 'So11111111111111111111111111111111111111112',
+      //   outputMint: collectionInfo?.data?.item?.erc20_address,
+      //   amount: Number(amount),
+      //   autoSlippage: true,
+      //   swapMode:'ExactIn',
+      //   maxAutoSlippageBps: 500, // 5%,
+      // });
+      // console.log('swap ',amount ,'sol => ',slug );
+      // console.log('quote',quote);
+      
+      
       const swapResponse = await jupiterApi.swapPost({
         swapRequest: {
           quoteResponse: quote,
