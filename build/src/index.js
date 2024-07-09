@@ -1,5 +1,6 @@
 "use strict";
 
+var _process$env;
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
     "default": mod
@@ -28,7 +29,7 @@ app.doc('/doc', {
 app.get('/swagger-ui', (0, swagger_ui_1.swaggerUI)({
   url: '/doc'
 }));
-var port = 3000;
+var port = Number((_process$env = process.env) === null || _process$env === void 0 ? void 0 : _process$env.PORT) || 4000;
 console.log("Server is running on port ".concat(port, "\nVisit http://localhost:").concat(port, "/swagger-ui to explore existing actions\nVisit https://actions.dialect.to to unfurl action into a Blink\n"));
 (0, node_server_1.serve)({
   fetch: app.fetch,
