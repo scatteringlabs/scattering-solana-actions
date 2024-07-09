@@ -44,7 +44,7 @@ app.openapi(
           actions: [
             ...SWAP_AMOUNT_USD_OPTIONS.map(({ lable, amount }) => ({
               label: `${lable}`,
-              href: `/api/buy/${slug}/${amount}`,
+              href: `/blink-api/buy/${slug}/${amount}`,
             })),
             // {
             //   href: `/api/buy/usdt/amount`,

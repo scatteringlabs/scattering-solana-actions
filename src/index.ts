@@ -9,7 +9,7 @@ const app = new OpenAPIHono();
 app.use('/*', cors());
 
 // <--Actions-->
-app.route('/api', scatteringSwap);
+app.route('/blink-api', scatteringSwap);
 // </--Actions-->
 
 app.doc('/doc', {

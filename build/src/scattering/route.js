@@ -76,7 +76,7 @@ app.openapi((0, zod_openapi_1.createRoute)({
                   amount = _ref2.amount;
                 return {
                   label: "".concat(lable),
-                  href: "/api/buy/".concat(slug, "/").concat(amount)
+                  href: "/blink-api/buy/".concat(slug, "/").concat(amount)
                 };
               }))
             }

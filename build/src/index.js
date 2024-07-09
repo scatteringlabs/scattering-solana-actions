@@ -17,7 +17,7 @@ var zod_openapi_1 = require("@hono/zod-openapi");
 var app = new zod_openapi_1.OpenAPIHono();
 app.use('/*', (0, cors_1.cors)());
 // <--Actions-->
-app.route('/api', route_1["default"]);
+app.route('/blink-api', route_1["default"]);
 // </--Actions-->
 app.doc('/doc', {
   info: {
