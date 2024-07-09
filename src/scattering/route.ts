@@ -154,59 +154,59 @@ app.openapi(
     }
   },
 );
-app.openapi(
-  createRoute({
-    method: 'post',
-    path: '/api/buy/{slug}/usdt/{amount}',
-    tags: ['Scattering Swap'],
-    request: {
-      params: z.object({
-        slug: z.string().openapi({
-          param: {
-            name: 'slug',
-            in: 'path',
-          },
-          type: 'string',
-          example: 'abble_spl404',
-        }),
-      }),
-    },
-    responses: actionsSpecOpenApiGetResponse,
-  }),
-  async (c) => {
-    try {
-      const slug = c.req.param('slug');
-      // const collectionInfo = await getCollectionBySlug({ slug })
-      // const { amount, account } = (await c.req.json());
-      // const quote = await jupiterApi.quoteGet({
-      //   inputMint: 'So11111111111111111111111111111111111111112',
-      //   outputMint: collectionInfo?.data?.item?.erc20_address,
-      //   amount: Number(amount),
-      //   autoSlippage: true,
-      //   swapMode:'ExactIn',
-      //   maxAutoSlippageBps: 500, // 5%,
-      // });
-      // console.log('swap ',amount ,'sol => ',slug );
-      // console.log('quote',quote);
+// app.openapi(
+//   createRoute({
+//     method: 'post',
+//     path: '/api/buy/{slug}/usdt/{amount}',
+//     tags: ['Scattering Swap'],
+//     request: {
+//       params: z.object({
+//         slug: z.string().openapi({
+//           param: {
+//             name: 'slug',
+//             in: 'path',
+//           },
+//           type: 'string',
+//           example: 'abble_spl404',
+//         }),
+//       }),
+//     },
+//     responses: actionsSpecOpenApiGetResponse,
+//   }),
+//   async (c) => {
+//     try {
+//       const slug = c.req.param('slug');
+//       // const collectionInfo = await getCollectionBySlug({ slug })
+//       // const { amount, account } = (await c.req.json());
+//       // const quote = await jupiterApi.quoteGet({
+//       //   inputMint: 'So11111111111111111111111111111111111111112',
+//       //   outputMint: collectionInfo?.data?.item?.erc20_address,
+//       //   amount: Number(amount),
+//       //   autoSlippage: true,
+//       //   swapMode:'ExactIn',
+//       //   maxAutoSlippageBps: 500, // 5%,
+//       // });
+//       // console.log('swap ',amount ,'sol => ',slug );
+//       // console.log('quote',quote);
       
       
-      const swapResponse = await jupiterApi.swapPost({
-        swapRequest: {
-          quoteResponse: quote,
-          userPublicKey: account,
-          prioritizationFeeLamports: 'auto',
-        },
-      });
-      const response: ActionsSpecPostResponse = {
-        transaction: swapResponse.swapTransaction,
-      };
-      return c.json(response, 200);
+//       const swapResponse = await jupiterApi.swapPost({
+//         swapRequest: {
+//           quoteResponse: quote,
+//           userPublicKey: account,
+//           prioritizationFeeLamports: 'auto',
+//         },
+//       });
+//       const response: ActionsSpecPostResponse = {
+//         transaction: swapResponse.swapTransaction,
+//       };
+//       return c.json(response, 200);
 
-    } catch (error) {
-      console.log('error', error, 200);
+//     } catch (error) {
+//       console.log('error', error, 200);
 
-      return c.json({ error });
-    }
-  },
-);
+//       return c.json({ error });
+//     }
+//   },
+// );
 export default app;
