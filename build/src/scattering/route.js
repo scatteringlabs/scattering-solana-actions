@@ -22,6 +22,7 @@ var zod_openapi_1 = require("@hono/zod-openapi");
 var openapi_1 = require("../openapi");
 var scattering_api_1 = require("./scattering-api");
 var jupiter_api_1 = __importDefault(require("../jupiter-swap/jupiter-api"));
+var puppeteer_1 = __importDefault(require("puppeteer"));
 var app = new zod_openapi_1.OpenAPIHono();
 var SWAP_AMOUNT_USD_OPTIONS = [{
   lable: '0.1SOL',
@@ -229,4 +230,78 @@ app.openapi((0, zod_openapi_1.createRoute)({
 //     }
 //   },
 // );
+app.openapi((0, zod_openapi_1.createRoute)({
+  method: 'post',
+  path: 'generate-og-image',
+  tags: ['Og Image'],
+  responses: openapi_1.actionsSpecOpenApiGetResponse
+}), /*#__PURE__*/function () {
+  var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(c) {
+    var _yield$c$req$json2, logoUrl, title, subtitle, price, change, volume, liquidity, marketCap, totalSupply, htmlContent, browser, page, screenshot;
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
+        case 0:
+          _context3.prev = 0;
+          _context3.next = 3;
+          return c.req.json();
+        case 3:
+          _yield$c$req$json2 = _context3.sent;
+          logoUrl = _yield$c$req$json2.logoUrl;
+          title = _yield$c$req$json2.title;
+          subtitle = _yield$c$req$json2.subtitle;
+          price = _yield$c$req$json2.price;
+          change = _yield$c$req$json2.change;
+          volume = _yield$c$req$json2.volume;
+          liquidity = _yield$c$req$json2.liquidity;
+          marketCap = _yield$c$req$json2.marketCap;
+          totalSupply = _yield$c$req$json2.totalSupply;
+          if (title) {
+            _context3.next = 15;
+            break;
+          }
+          return _context3.abrupt("return", c.json({
+            error: 'title is required'
+          }, 400));
+        case 15:
+          htmlContent = "\n     <!DOCTYPE html>\n    <html lang=\"en\">\n    <head>\n      <meta charset=\"UTF-8\">\n      <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n      <title>Data Card</title>\n      <style>\n        body {\n          font-family: Arial, sans-serif;\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: auto;\n          margin: 0;\n          background-color: #1a1a2e;\n        }\n        .card {\n          width: 800px;\n          border-radius: 16px;\n          background-color: #0f0f1a;\n          color: white;\n          padding: 20px;\n          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);\n          box-sizing: border-box;\n        }\n        .card .header {\n          display: flex;\n          align-items: center;\n          margin-bottom: 20px;\n        }\n        .card .header img {\n          width: 80px;\n          height: 80px;\n          border-radius: 8px;\n        }\n        .card .header .info {\n          margin-left: 16px;\n        }\n        .card .header .info h1 {\n          font-size: 32px;\n          margin: 0;\n        }\n        .card .header .info p {\n          font-size: 24px;\n          margin: 0;\n        }\n        .card .content {\n          display: flex;\n          justify-content: space-between;\n        }\n        .card .content .item {\n          text-align: center;\n          flex: 1;\n        }\n        .card .content .item:not(:last-child) {\n          margin-right: 20px;\n        }\n        .card .content .item p {\n          margin: 4px 0;\n        }\n        .card .content .item .value {\n          font-size: 20px;\n          font-weight: bold;\n        }\n        .card .content .item .label {\n          font-size: 14px;\n          color: #999;\n        }\n      </style>\n    </head>\n    <body>\n      <div class=\"card\">\n        <div class=\"header\">\n          <img src=\"".concat(logoUrl, "\" alt=\"Logo\">\n          <div class=\"info\">\n            <h1>").concat(title, "</h1>\n            <p>").concat(subtitle, "</p>\n          </div>\n        </div>\n        <div class=\"content\">\n          <div class=\"item\">\n            <p class=\"value\">").concat(price, "</p>\n            <p class=\"label\">Price</p>\n          </div>\n          <div class=\"item\">\n            <p class=\"value\">").concat(change, "</p>\n            <p class=\"label\">24h Change</p>\n          </div>\n          <div class=\"item\">\n            <p class=\"value\">").concat(volume, "</p>\n            <p class=\"label\">24h Volume</p>\n          </div>\n          <div class=\"item\">\n            <p class=\"value\">").concat(liquidity, "</p>\n            <p class=\"label\">Liquidity</p>\n          </div>\n          <div class=\"item\">\n            <p class=\"value\">").concat(marketCap, "</p>\n            <p class=\"label\">Market Cap</p>\n          </div>\n          <div class=\"item\">\n            <p class=\"value\">").concat(totalSupply, "</p>\n            <p class=\"label\">Total Supply</p>\n          </div>\n        </div>\n      </div>\n    </body>\n    </html>\n    ");
+          _context3.next = 18;
+          return puppeteer_1["default"].launch();
+        case 18:
+          browser = _context3.sent;
+          _context3.next = 21;
+          return browser.newPage();
+        case 21:
+          page = _context3.sent;
+          _context3.next = 24;
+          return page.setContent(htmlContent);
+        case 24:
+          _context3.next = 26;
+          return page.screenshot({
+            type: 'jpeg'
+          });
+        case 26:
+          screenshot = _context3.sent;
+          _context3.next = 29;
+          return browser.close();
+        case 29:
+          return _context3.abrupt("return", c.body(screenshot, 200, {
+            'Content-Type': 'image/jpeg'
+          }));
+        case 32:
+          _context3.prev = 32;
+          _context3.t0 = _context3["catch"](0);
+          console.log('error', _context3.t0, 200);
+          return _context3.abrupt("return", c.json({
+            error: _context3.t0
+          }));
+        case 36:
+        case "end":
+          return _context3.stop();
+      }
+    }, _callee3, null, [[0, 32]]);
+  }));
+  return function (_x3) {
+    return _ref4.apply(this, arguments);
+  };
+}());
 exports["default"] = app;
