@@ -26,13 +26,13 @@ var puppeteer_1 = __importDefault(require("puppeteer"));
 var app = new zod_openapi_1.OpenAPIHono();
 var SWAP_AMOUNT_USD_OPTIONS = [{
   lable: '0.1SOL',
-  amount: 100000000
+  amount: 0.1
 }, {
   lable: '0.5SOL',
-  amount: 500000000
+  amount: 0.5
 }, {
   lable: '1SOL',
-  amount: 1000000000
+  amount: 1
 }];
 app.openapi((0, zod_openapi_1.createRoute)({
   method: 'get',
@@ -54,7 +54,7 @@ app.openapi((0, zod_openapi_1.createRoute)({
   responses: openapi_1.actionsSpecOpenApiGetResponse
 }), /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(c) {
-    var _collectionInfo$data, _collectionInfo$data2, _collectionInfo$data3, _collectionInfo$data4, slug, collectionInfo, response;
+    var _collectionInfo$data, _collectionInfo$data2, _collectionInfo$data3, _collectionInfo$data4, _collectionInfo$data5, slug, collectionInfo, response;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
@@ -72,14 +72,21 @@ app.openapi((0, zod_openapi_1.createRoute)({
             title: collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data3 = collectionInfo.data) === null || _collectionInfo$data3 === void 0 || (_collectionInfo$data3 = _collectionInfo$data3.item) === null || _collectionInfo$data3 === void 0 ? void 0 : _collectionInfo$data3.name,
             description: collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data4 = collectionInfo.data) === null || _collectionInfo$data4 === void 0 || (_collectionInfo$data4 = _collectionInfo$data4.item) === null || _collectionInfo$data4 === void 0 ? void 0 : _collectionInfo$data4.description,
             links: {
-              actions: _toConsumableArray(SWAP_AMOUNT_USD_OPTIONS.map(function (_ref2) {
+              actions: [].concat(_toConsumableArray(SWAP_AMOUNT_USD_OPTIONS.map(function (_ref2) {
                 var lable = _ref2.lable,
                   amount = _ref2.amount;
                 return {
                   label: "".concat(lable),
                   href: "/blink-api/buy/".concat(slug, "/").concat(amount)
                 };
-              }))
+              })), [{
+                href: "/blink-api/buy/".concat(slug, "/{amount}"),
+                label: "Buy ".concat(collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data5 = collectionInfo.data) === null || _collectionInfo$data5 === void 0 || (_collectionInfo$data5 = _collectionInfo$data5.item) === null || _collectionInfo$data5 === void 0 ? void 0 : _collectionInfo$data5.symbol),
+                parameters: [{
+                  name: 'amount',
+                  label: 'Enter a custom SOL amount'
+                }]
+              }])
             }
           };
           return _context.abrupt("return", c.json(response));
@@ -117,7 +124,7 @@ app.openapi((0, zod_openapi_1.createRoute)({
   responses: openapi_1.actionsSpecOpenApiGetResponse
 }), /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(c) {
-    var _collectionInfo$data5, slug, collectionInfo, amount, _yield$c$req$json, account, quote, swapResponse, response;
+    var _collectionInfo$data6, slug, collectionInfo, amount, amountInLamports, _yield$c$req$json, account, quote, swapResponse, response;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
@@ -130,25 +137,26 @@ app.openapi((0, zod_openapi_1.createRoute)({
         case 4:
           collectionInfo = _context2.sent;
           amount = c.req.param('amount');
-          _context2.next = 8;
+          amountInLamports = Math.floor(parseFloat(amount) * 1000000000);
+          _context2.next = 9;
           return c.req.json();
-        case 8:
+        case 9:
           _yield$c$req$json = _context2.sent;
           account = _yield$c$req$json.account;
-          _context2.next = 12;
+          _context2.next = 13;
           return jupiter_api_1["default"].quoteGet({
             inputMint: 'So11111111111111111111111111111111111111112',
-            outputMint: collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data5 = collectionInfo.data) === null || _collectionInfo$data5 === void 0 || (_collectionInfo$data5 = _collectionInfo$data5.item) === null || _collectionInfo$data5 === void 0 ? void 0 : _collectionInfo$data5.erc20_address,
-            amount: Number(amount),
+            outputMint: collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data6 = collectionInfo.data) === null || _collectionInfo$data6 === void 0 || (_collectionInfo$data6 = _collectionInfo$data6.item) === null || _collectionInfo$data6 === void 0 ? void 0 : _collectionInfo$data6.erc20_address,
+            amount: Number(amountInLamports),
             autoSlippage: true,
             swapMode: 'ExactIn',
             maxAutoSlippageBps: 500 // 5%,
           });
-        case 12:
+        case 13:
           quote = _context2.sent;
           console.log('swap ', amount, 'sol => ', slug);
           console.log('quote', quote);
-          _context2.next = 17;
+          _context2.next = 18;
           return jupiter_api_1["default"].swapPost({
             swapRequest: {
               quoteResponse: quote,
@@ -156,80 +164,29 @@ app.openapi((0, zod_openapi_1.createRoute)({
               prioritizationFeeLamports: 'auto'
             }
           });
-        case 17:
+        case 18:
           swapResponse = _context2.sent;
           response = {
             transaction: swapResponse.swapTransaction
           };
           return _context2.abrupt("return", c.json(response, 200));
-        case 22:
-          _context2.prev = 22;
+        case 23:
+          _context2.prev = 23;
           _context2.t0 = _context2["catch"](0);
           console.log('error', _context2.t0, 200);
           return _context2.abrupt("return", c.json({
             error: _context2.t0
           }));
-        case 26:
+        case 27:
         case "end":
           return _context2.stop();
       }
-    }, _callee2, null, [[0, 22]]);
+    }, _callee2, null, [[0, 23]]);
   }));
   return function (_x2) {
     return _ref3.apply(this, arguments);
   };
 }());
-// app.openapi(
-//   createRoute({
-//     method: 'post',
-//     path: '/api/buy/{slug}/usdt/{amount}',
-//     tags: ['Scattering Swap'],
-//     request: {
-//       params: z.object({
-//         slug: z.string().openapi({
-//           param: {
-//             name: 'slug',
-//             in: 'path',
-//           },
-//           type: 'string',
-//           example: 'abble_spl404',
-//         }),
-//       }),
-//     },
-//     responses: actionsSpecOpenApiGetResponse,
-//   }),
-//   async (c) => {
-//     try {
-//       const slug = c.req.param('slug');
-//       // const collectionInfo = await getCollectionBySlug({ slug })
-//       // const { amount, account } = (await c.req.json());
-//       // const quote = await jupiterApi.quoteGet({
-//       //   inputMint: 'So11111111111111111111111111111111111111112',
-//       //   outputMint: collectionInfo?.data?.item?.erc20_address,
-//       //   amount: Number(amount),
-//       //   autoSlippage: true,
-//       //   swapMode:'ExactIn',
-//       //   maxAutoSlippageBps: 500, // 5%,
-//       // });
-//       // console.log('swap ',amount ,'sol => ',slug );
-//       // console.log('quote',quote);
-//       const swapResponse = await jupiterApi.swapPost({
-//         swapRequest: {
-//           quoteResponse: quote,
-//           userPublicKey: account,
-//           prioritizationFeeLamports: 'auto',
-//         },
-//       });
-//       const response: ActionsSpecPostResponse = {
-//         transaction: swapResponse.swapTransaction,
-//       };
-//       return c.json(response, 200);
-//     } catch (error) {
-//       console.log('error', error, 200);
-//       return c.json({ error });
-//     }
-//   },
-// );
 app.openapi((0, zod_openapi_1.createRoute)({
   method: 'post',
   path: 'generate-og-image',
