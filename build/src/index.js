@@ -15,7 +15,11 @@ var cors_1 = require("hono/cors");
 var swagger_ui_1 = require("@hono/swagger-ui");
 var zod_openapi_1 = require("@hono/zod-openapi");
 var app = new zod_openapi_1.OpenAPIHono();
-app.use('/*', (0, cors_1.cors)());
+app.use((0, cors_1.cors)({
+  origin: '*',
+  allowMethods: ['GET', 'POST', 'OPTIONS'],
+  allowHeaders: ['Content-Type', 'Authorization']
+}));
 // <--Actions-->
 app.route('/blink-api', route_1["default"]);
 // </--Actions-->

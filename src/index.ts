@@ -6,7 +6,11 @@ import { swaggerUI } from '@hono/swagger-ui';
 import { OpenAPIHono } from '@hono/zod-openapi';
 
 const app = new OpenAPIHono();
-app.use('/*', cors());
+app.use(cors({
+  origin: '*',
+  allowMethods: ['GET', 'POST', 'OPTIONS'],
+  allowHeaders: ['Content-Type', 'Authorization']
+}));
 
 // <--Actions-->
 app.route('/blink-api', scatteringSwap);
