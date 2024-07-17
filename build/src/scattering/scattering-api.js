@@ -8,7 +8,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.getCollectionBySlug = exports.BASE_URL_DEV = void 0;
-exports.BASE_URL_DEV = "https://api.scattering.io/dev-api/v2";
+exports.BASE_URL_DEV = "https://api.scattering.io/api/v2";
 var getCollectionBySlug = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(_ref) {
     var slug, response;

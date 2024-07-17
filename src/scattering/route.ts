@@ -42,12 +42,17 @@ app.openapi(
   async (c) => {
     try {
       const slug = c.req.param('slug');
-      const collectionInfo = await getCollectionBySlug({ slug })
+      const collectionInfo = await getCollectionBySlug({ slug })      
+      const description = collectionInfo?.data?.item?.description;
+      const truncatedDescription = description?.length > 180
+      ? `${description.substring(0, 180)}...`
+      : description;
       const response: ActionsSpecGetResponse = {
+        // icon: `https://scattering.io/api/og?slug=${slug}`,
         icon: `https://d2oiecgevbfxbl.cloudfront.net/images/550x550/freeze=false/https://static.crystalvault.io/logo/solana/assets/${collectionInfo?.data?.item?.erc20_address}/logo.png`,
         label: collectionInfo?.data?.item?.name,
         title: collectionInfo?.data?.item?.name,
-        description: collectionInfo?.data?.item?.description,
+        description: truncatedDescription,
         links: {
           actions: [
             ...SWAP_AMOUNT_USD_OPTIONS.map(({ lable, amount }) => ({
@@ -84,7 +89,7 @@ app.openapi(
     tags: ['Scattering Swap'],
     request: {
       params: z.object({
-        slug: z.string().openapi({
+        slug: z.string().optional().openapi({
           param: {
             name: 'slug',
             in: 'path',

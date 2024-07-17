@@ -72,7 +72,7 @@ app.openapi((0, zod_openapi_1.createRoute)({
   responses: openapi_1.actionsSpecOpenApiGetResponse
 }), /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(c) {
-    var _collectionInfo$data, _collectionInfo$data2, _collectionInfo$data3, _collectionInfo$data4, _collectionInfo$data5, slug, collectionInfo, response;
+    var _collectionInfo$data, _collectionInfo$data2, _collectionInfo$data3, _collectionInfo$data4, _collectionInfo$data5, slug, collectionInfo, description, truncatedDescription, response;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
@@ -84,11 +84,14 @@ app.openapi((0, zod_openapi_1.createRoute)({
           });
         case 4:
           collectionInfo = _context2.sent;
+          description = collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data = collectionInfo.data) === null || _collectionInfo$data === void 0 || (_collectionInfo$data = _collectionInfo$data.item) === null || _collectionInfo$data === void 0 ? void 0 : _collectionInfo$data.description;
+          truncatedDescription = (description === null || description === void 0 ? void 0 : description.length) > 180 ? "".concat(description.substring(0, 180), "...") : description;
           response = {
-            icon: "https://d2oiecgevbfxbl.cloudfront.net/images/550x550/freeze=false/https://static.crystalvault.io/logo/solana/assets/".concat(collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data = collectionInfo.data) === null || _collectionInfo$data === void 0 || (_collectionInfo$data = _collectionInfo$data.item) === null || _collectionInfo$data === void 0 ? void 0 : _collectionInfo$data.erc20_address, "/logo.png"),
-            label: collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data2 = collectionInfo.data) === null || _collectionInfo$data2 === void 0 || (_collectionInfo$data2 = _collectionInfo$data2.item) === null || _collectionInfo$data2 === void 0 ? void 0 : _collectionInfo$data2.name,
-            title: collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data3 = collectionInfo.data) === null || _collectionInfo$data3 === void 0 || (_collectionInfo$data3 = _collectionInfo$data3.item) === null || _collectionInfo$data3 === void 0 ? void 0 : _collectionInfo$data3.name,
-            description: collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data4 = collectionInfo.data) === null || _collectionInfo$data4 === void 0 || (_collectionInfo$data4 = _collectionInfo$data4.item) === null || _collectionInfo$data4 === void 0 ? void 0 : _collectionInfo$data4.description,
+            // icon: `https://scattering.io/api/og?slug=${slug}`,
+            icon: "https://d2oiecgevbfxbl.cloudfront.net/images/550x550/freeze=false/https://static.crystalvault.io/logo/solana/assets/".concat(collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data2 = collectionInfo.data) === null || _collectionInfo$data2 === void 0 || (_collectionInfo$data2 = _collectionInfo$data2.item) === null || _collectionInfo$data2 === void 0 ? void 0 : _collectionInfo$data2.erc20_address, "/logo.png"),
+            label: collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data3 = collectionInfo.data) === null || _collectionInfo$data3 === void 0 || (_collectionInfo$data3 = _collectionInfo$data3.item) === null || _collectionInfo$data3 === void 0 ? void 0 : _collectionInfo$data3.name,
+            title: collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data4 = collectionInfo.data) === null || _collectionInfo$data4 === void 0 || (_collectionInfo$data4 = _collectionInfo$data4.item) === null || _collectionInfo$data4 === void 0 ? void 0 : _collectionInfo$data4.name,
+            description: truncatedDescription,
             links: {
               actions: [].concat(_toConsumableArray(SWAP_AMOUNT_USD_OPTIONS.map(function (_ref3) {
                 var lable = _ref3.lable,
@@ -108,16 +111,16 @@ app.openapi((0, zod_openapi_1.createRoute)({
             }
           };
           return _context2.abrupt("return", c.json(response));
-        case 9:
-          _context2.prev = 9;
+        case 11:
+          _context2.prev = 11;
           _context2.t0 = _context2["catch"](0);
           console.error('error', _context2.t0);
           return _context2.abrupt("return", c.json({}));
-        case 13:
+        case 15:
         case "end":
           return _context2.stop();
       }
-    }, _callee2, null, [[0, 9]]);
+    }, _callee2, null, [[0, 11]]);
   }));
   return function (_x2) {
     return _ref2.apply(this, arguments);
@@ -129,7 +132,7 @@ app.openapi((0, zod_openapi_1.createRoute)({
   tags: ['Scattering Swap'],
   request: {
     params: zod_openapi_1.z.object({
-      slug: zod_openapi_1.z.string().openapi({
+      slug: zod_openapi_1.z.string().optional().openapi({
         param: {
           name: 'slug',
           "in": 'path'
