@@ -48,8 +48,8 @@ app.openapi(
       ? `${description.substring(0, 180)}...`
       : description;
       const response: ActionsSpecGetResponse = {
-        // icon: `https://scattering.io/api/og?slug=${slug}`,
-        icon: `https://d2oiecgevbfxbl.cloudfront.net/images/550x550/freeze=false/https://static.crystalvault.io/logo/solana/assets/${collectionInfo?.data?.item?.erc20_address}/logo.png`,
+        icon: `https://scattering.io/api/blink-card?slug=${slug}`,
+        // icon: `https://d2oiecgevbfxbl.cloudfront.net/images/550x550/freeze=false/https://static.crystalvault.io/logo/solana/assets/${collectionInfo?.data?.item?.erc20_address}/logo.png`,
         label: collectionInfo?.data?.item?.name,
         title: collectionInfo?.data?.item?.name,
         description: truncatedDescription,

@@ -72,7 +72,7 @@ app.openapi((0, zod_openapi_1.createRoute)({
   responses: openapi_1.actionsSpecOpenApiGetResponse
 }), /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(c) {
-    var _collectionInfo$data, _collectionInfo$data2, _collectionInfo$data3, _collectionInfo$data4, _collectionInfo$data5, slug, collectionInfo, description, truncatedDescription, response;
+    var _collectionInfo$data, _collectionInfo$data2, _collectionInfo$data3, _collectionInfo$data4, slug, collectionInfo, description, truncatedDescription, response;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
@@ -87,10 +87,10 @@ app.openapi((0, zod_openapi_1.createRoute)({
           description = collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data = collectionInfo.data) === null || _collectionInfo$data === void 0 || (_collectionInfo$data = _collectionInfo$data.item) === null || _collectionInfo$data === void 0 ? void 0 : _collectionInfo$data.description;
           truncatedDescription = (description === null || description === void 0 ? void 0 : description.length) > 180 ? "".concat(description.substring(0, 180), "...") : description;
           response = {
-            // icon: `https://scattering.io/api/og?slug=${slug}`,
-            icon: "https://d2oiecgevbfxbl.cloudfront.net/images/550x550/freeze=false/https://static.crystalvault.io/logo/solana/assets/".concat(collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data2 = collectionInfo.data) === null || _collectionInfo$data2 === void 0 || (_collectionInfo$data2 = _collectionInfo$data2.item) === null || _collectionInfo$data2 === void 0 ? void 0 : _collectionInfo$data2.erc20_address, "/logo.png"),
-            label: collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data3 = collectionInfo.data) === null || _collectionInfo$data3 === void 0 || (_collectionInfo$data3 = _collectionInfo$data3.item) === null || _collectionInfo$data3 === void 0 ? void 0 : _collectionInfo$data3.name,
-            title: collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data4 = collectionInfo.data) === null || _collectionInfo$data4 === void 0 || (_collectionInfo$data4 = _collectionInfo$data4.item) === null || _collectionInfo$data4 === void 0 ? void 0 : _collectionInfo$data4.name,
+            icon: "https://scattering.io/api/blink-card?slug=".concat(slug),
+            // icon: `https://d2oiecgevbfxbl.cloudfront.net/images/550x550/freeze=false/https://static.crystalvault.io/logo/solana/assets/${collectionInfo?.data?.item?.erc20_address}/logo.png`,
+            label: collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data2 = collectionInfo.data) === null || _collectionInfo$data2 === void 0 || (_collectionInfo$data2 = _collectionInfo$data2.item) === null || _collectionInfo$data2 === void 0 ? void 0 : _collectionInfo$data2.name,
+            title: collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data3 = collectionInfo.data) === null || _collectionInfo$data3 === void 0 || (_collectionInfo$data3 = _collectionInfo$data3.item) === null || _collectionInfo$data3 === void 0 ? void 0 : _collectionInfo$data3.name,
             description: truncatedDescription,
             links: {
               actions: [].concat(_toConsumableArray(SWAP_AMOUNT_USD_OPTIONS.map(function (_ref3) {
@@ -102,7 +102,7 @@ app.openapi((0, zod_openapi_1.createRoute)({
                 };
               })), [{
                 href: "/blink-api/buy/".concat(slug, "/{amount}"),
-                label: "Buy ".concat(collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data5 = collectionInfo.data) === null || _collectionInfo$data5 === void 0 || (_collectionInfo$data5 = _collectionInfo$data5.item) === null || _collectionInfo$data5 === void 0 ? void 0 : _collectionInfo$data5.symbol),
+                label: "Buy ".concat(collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data4 = collectionInfo.data) === null || _collectionInfo$data4 === void 0 || (_collectionInfo$data4 = _collectionInfo$data4.item) === null || _collectionInfo$data4 === void 0 ? void 0 : _collectionInfo$data4.symbol),
                 parameters: [{
                   name: 'amount',
                   label: 'Enter a custom SOL amount'
@@ -145,7 +145,7 @@ app.openapi((0, zod_openapi_1.createRoute)({
   responses: openapi_1.actionsSpecOpenApiGetResponse
 }), /*#__PURE__*/function () {
   var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(c) {
-    var _collectionInfo$data6, slug, collectionInfo, amount, amountInLamports, _yield$c$req$json, account, quote, swapResponse, response;
+    var _collectionInfo$data5, slug, collectionInfo, amount, amountInLamports, _yield$c$req$json, account, quote, swapResponse, response;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
@@ -167,7 +167,7 @@ app.openapi((0, zod_openapi_1.createRoute)({
           _context3.next = 13;
           return jupiter_api_1["default"].quoteGet({
             inputMint: 'So11111111111111111111111111111111111111112',
-            outputMint: collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data6 = collectionInfo.data) === null || _collectionInfo$data6 === void 0 || (_collectionInfo$data6 = _collectionInfo$data6.item) === null || _collectionInfo$data6 === void 0 ? void 0 : _collectionInfo$data6.erc20_address,
+            outputMint: collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data5 = collectionInfo.data) === null || _collectionInfo$data5 === void 0 || (_collectionInfo$data5 = _collectionInfo$data5.item) === null || _collectionInfo$data5 === void 0 ? void 0 : _collectionInfo$data5.erc20_address,
             amount: Number(amountInLamports),
             autoSlippage: true,
             swapMode: 'ExactIn',
