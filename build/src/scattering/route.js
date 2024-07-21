@@ -87,7 +87,7 @@ app.openapi((0, zod_openapi_1.createRoute)({
           description = collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data = collectionInfo.data) === null || _collectionInfo$data === void 0 || (_collectionInfo$data = _collectionInfo$data.item) === null || _collectionInfo$data === void 0 ? void 0 : _collectionInfo$data.description;
           truncatedDescription = (description === null || description === void 0 ? void 0 : description.length) > 180 ? "".concat(description.substring(0, 180), "...") : description;
           response = {
-            icon: "https://scattering.io/api/blink-card?slug=".concat(slug),
+            icon: "https://scattering.io/api/blink-card?slug=".concat(slug, "&timestamp=").concat(new Date().getTime()),
             // icon: `https://d2oiecgevbfxbl.cloudfront.net/images/550x550/freeze=false/https://static.crystalvault.io/logo/solana/assets/${collectionInfo?.data?.item?.erc20_address}/logo.png`,
             label: collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data2 = collectionInfo.data) === null || _collectionInfo$data2 === void 0 || (_collectionInfo$data2 = _collectionInfo$data2.item) === null || _collectionInfo$data2 === void 0 ? void 0 : _collectionInfo$data2.name,
             title: collectionInfo === null || collectionInfo === void 0 || (_collectionInfo$data3 = collectionInfo.data) === null || _collectionInfo$data3 === void 0 || (_collectionInfo$data3 = _collectionInfo$data3.item) === null || _collectionInfo$data3 === void 0 ? void 0 : _collectionInfo$data3.name,
